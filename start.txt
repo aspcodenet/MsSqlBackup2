@@ -1,3 +1,3 @@
 #https://github.com/sekka1/docker-s3cmd
 
- docker run --rm  --name sssss   -e aws_key=0031162fe9996230000000002 -e aws_secret=K003qlVKCBpwQ/4TYsRm/OZUODp1JSc -e s3_host_base=s3.eu-central-003.backblazeb2.com -e cmd=interactive -e 'host_bucket=%(bucket)s.s3.eu-central-003.backblazeb2.com' -e bucket_location=eu-central-003  -it docker.io/library/sqlkube /bin/sh
+ docker run --rm  --name sssss   -e aws_key=CHANGE -e aws_secret=CHANGE -e s3_host_base=s3.eu-central-003.backblazeb2.com -e cmd=interactive -e 'host_bucket=%(bucket)s.s3.eu-central-003.backblazeb2.com' -e bucket_location=eu-central-003  -it docker.io/library/sqlkube /bin/sh
