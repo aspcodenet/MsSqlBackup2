@@ -2,12 +2,16 @@
 
 # docker run --rm  --name sssss -e sql_database=TestAppProd -e sql_host=165.227.224.194,31561 -e sql_user=sa -e sql_password=Hejsan123   -e AWS_KEY=0031162fe9996230000000001 -e aws_secret=K0036jAL9Tx15Evmpww0Bxe4Fa+G9BE -e s3_host_base=s3.eu-central-003.backblazeb2.com -e cmd=interactive    -it docker.io/library/sqlkube
 
+# docker run --rm  --name sssss -e sql_database=salary -e sql_host=172.232.149.40 -e sql_port=30164 -e sql_user=root -e sql_password=hejsan123   -e aws_key=0031162fe9996230000000007 -e aws_secret=K003Oso/EaSHLPyS0Zu5u6S9wjTvbAc -e s3_host_base=s3.eu-central-003.backblazeb2.com -e cmd=sync-local-to-s3 -e DEST_S3=s3://testar0508     -it s3test
+
+#  docker run --rm  --name sssss -e sql_database=TestAppProd -e sql_host=165.227.224.194,31561 -e sql_user=sa -e sql_password=Hejsan123   -e aws_key=0031162fe9996230000000007 -e aws_secret=K003Oso/EaSHLPyS0Zu5u6S9wjTvbAc -e s3_host_base=s3.eu-central-003.backblazeb2.com -e cmd=sync-local-to-s3 -e DEST_S3=s3://testar0508     -it s3test
+
 #0031162fe9996230000000007
 #K003Oso/EaSHLPyS0Zu5u6S9wjTvbAc
 
 FILENAME=$(date "+%Y-%m-%d-%H-%M-%S")
 #sqlcmd -S ${sql_host} -U ${sql_user} -P ${sql_password} -Q "BACKUP DATABASE ${sql_database} TO DISK='/var/opt/mssql/data/${sql_database}$FILENAME'"
-# mysqldump -h ${sql_host}   -u${sql_user} -p${sql_password} ${sql_database} --flush-logs --master-data=2 --delete-master-logs | gzip >  /opt/src/${sql_database}$FILENAME.sql.gz
+mysqldump --ssl=0 -h ${sql_host} -P${sql_port}   -u${sql_user} -p${sql_password} ${sql_database} --flush-logs --master-data=2 --delete-master-logs | gzip >  /opt/src/${sql_database}$FILENAME.sql.gz
 echo "Starting SQL dump" >>  /opt/src/stefan.txt
 # main entry point to run s3cmd
 #
