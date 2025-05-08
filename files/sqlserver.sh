@@ -1,13 +1,14 @@
-#!/bin/sh -xe
+#!/bin/sh
 
 # docker run --rm  --name sssss -e sql_database=TestAppProd -e sql_host=165.227.224.194,31561 -e sql_user=sa -e sql_password=Hejsan123   -e AWS_KEY=0031162fe9996230000000001 -e aws_secret=K0036jAL9Tx15Evmpww0Bxe4Fa+G9BE -e s3_host_base=s3.eu-central-003.backblazeb2.com -e cmd=interactive    -it docker.io/library/sqlkube
 
-
+#0031162fe9996230000000007
+#K003Oso/EaSHLPyS0Zu5u6S9wjTvbAc
 
 FILENAME=$(date "+%Y-%m-%d-%H-%M-%S")
 #sqlcmd -S ${sql_host} -U ${sql_user} -P ${sql_password} -Q "BACKUP DATABASE ${sql_database} TO DISK='/var/opt/mssql/data/${sql_database}$FILENAME'"
-mysqldump -h ${sql_host}   -u${sql_user} -p${sql_password} ${sql_database} --flush-logs --master-data=2 --delete-master-logs | gzip >  /opt/src/${sql_database}$FILENAME.sql.gz
-
+# mysqldump -h ${sql_host}   -u${sql_user} -p${sql_password} ${sql_database} --flush-logs --master-data=2 --delete-master-logs | gzip >  /opt/src/${sql_database}$FILENAME.sql.gz
+echo "Starting SQL dump" >>  /opt/src/stefan.txt
 # main entry point to run s3cmd
 #
 S3CMD_PATH=/opt/s3cmd/s3cmd
@@ -73,7 +74,6 @@ if [ "${cmd}" != "interactive" ]; then
   # sync-s3-to-local - copy from s3 to local
   #
   if [ "${cmd}" = "sync-s3-to-local" ]; then
-      echo ${src-s3}
       ${S3CMD_PATH} --config=/opt/s3cfg  sync ${SRC_S3} /opt/dest/
   fi
 
@@ -81,12 +81,13 @@ if [ "${cmd}" != "interactive" ]; then
   # sync-local-to-s3 - copy from local to s3
   #
   if [ "${cmd}" = "sync-local-to-s3" ]; then
+      echo ${DEST_S3}
       ${S3CMD_PATH} --config=/opt/s3cfg sync /opt/src/ ${DEST_S3}
   fi
-else
+  else
   # Copy file over to the default location where S3cmd is looking for the config file
-  cp /opt/s3cfg /root/
-fi
+    cp /opt/s3cfg /root/
+  fi
 
 #
 # Finished operations

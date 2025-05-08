@@ -23,5 +23,7 @@ RUN chmod 777 /opt/sqlserver.sh
 RUN mkdir /opt/src
 RUN mkdir /opt/dest
 
+RUN dos2unix /opt/sqlserver.sh
+
 WORKDIR /
-CMD ["/opt/sqlserver.sh"]
+CMD ["sh", "/opt/sqlserver.sh"]
